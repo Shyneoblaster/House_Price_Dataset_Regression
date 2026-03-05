@@ -1,0 +1,37 @@
+Información General:
+
+id: Identificador unico para cada propiedad.
+date: Fecha de venta.
+
+Detalles del Precio:
+
+price: Precio de venta de la propiedad.
+
+Características de la Propiedad:
+
+bedrooms: # de Habitaciones
+bathrooms: # de Baños (incluye medios baños como 0.5).
+sqft_living: Espacio habitable en pies cuadrados.
+sqft_lot: Tamaño del terreno en pies cuadrados.
+floors: # de Pisos
+waterfront: Indica si la propiedad tiene vista al agua (1) o no (0).
+view: Calidad de la vista desde la propiedad (escala de 0 a 4).
+condition: Condición de la propiedad (escala de 1 a 5).
+grade: Calidad de construcción y diseño (escala de 1 a 13).
+
+Datos adicionales:
+
+sqft_above: Área habitable por encima del nivel del suelo en pies cuadrados.
+sqft_basement: Área del sótano en pies cuadrados.
+yr_built: Año de construcción de la propiedad.
+yr_renovated: Año de la última renovación (0 si no ha sido renovada).
+
+Información de ubicación:
+
+zipcode: Código postal de la propiedad.
+lat and long: Latitud y longitud de la propiedad.
+
+Características de las propiedades cercanas:
+
+sqft_living15: Promedio de espacio habitable de las 15 propiedades más cercanas.
+sqft_lot15: Promedio del tamaño del terreno de las 15 propiedades más cercanas.
