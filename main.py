@@ -61,13 +61,13 @@ X_test_scaled = scaler.transform(X_test)
 # 4. ENTRENAR MODELOS
 print("\nEntrenando Random Forest...")
 rf = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
-rf.fit(X_train, y_train)
-rf_pred = rf.predict(X_test)
+rf.fit(X_train_scaled, y_train)
+rf_pred = rf.predict(X_test_scaled)
 
 print("Entrenando MLP (Red Neuronal)...")
 mlp = MLPRegressor(
     hidden_layer_sizes=(100, 50),
-    max_iter=2000,  # Aumentado a 2000 iteraciones
+    max_iter=2000,
     random_state=42,
     early_stopping=True,  # Detiene el entrenamiento si no hay mejora
     validation_fraction=0.2,  # Usa 20% de los datos para validación
@@ -114,3 +114,51 @@ plt.ylabel('Precio Predicho')
 plt.tight_layout()
 plt.savefig('comparacion_modelos.png')
 print("\nEl gráfico se ha guardado como 'comparacion_modelos.png'")
+
+# 7. GRÁFICA DE RESIDUOS (ERRORES)
+plt.figure(figsize=(14, 6))
+
+plt.subplot(1, 2, 1)
+residuos_rf = y_test - rf_pred
+plt.scatter(rf_pred, residuos_rf, alpha=0.3, color='blue')
+plt.axhline(0, color='red', linestyle='--', lw=2)
+plt.title('Residuos - Random Forest')
+plt.xlabel('Precio Predicho')
+plt.ylabel('Residuo (Real - Predicho)')
+
+plt.subplot(1, 2, 2)
+residuos_mlp = y_test - mlp_pred
+plt.scatter(mlp_pred, residuos_mlp, alpha=0.3, color='green')
+plt.axhline(0, color='red', linestyle='--', lw=2)
+plt.title('Residuos - MLP (Red Neuronal)')
+plt.xlabel('Precio Predicho')
+plt.ylabel('Residuo (Real - Predicho)')
+
+plt.tight_layout()
+plt.savefig('residuos_modelos.png')
+print("El gráfico de residuos se ha guardado como 'residuos_modelos.png'")
+
+# 8. IMPORTANCIA DE LAS CARACTERÍSTICAS (RANDOM FOREST)
+importancias = rf.feature_importances_
+indices = np.argsort(importancias)[::-1]
+nombres_caracteristicas = X.columns
+
+plt.figure(figsize=(12, 6))
+plt.bar(range(X.shape[1]), importancias[indices], align="center", color='purple')
+plt.xticks(range(X.shape[1]), nombres_caracteristicas[indices], rotation=90)
+plt.title("Importancia de las Características (Random Forest)")
+plt.xlabel("Característica")
+plt.ylabel("Importancia")
+plt.tight_layout()
+plt.savefig('importancia_caracteristicas.png')
+print("El gráfico de importancia se ha guardado como 'importancia_caracteristicas.png'")
+
+# 9. DISTRIBUCIÓN DE LOS PRECIOS
+plt.figure(figsize=(10, 6))
+plt.hist(df['price'], bins=50, color='orange', edgecolor='black')
+plt.title('Distribución de los Precios reales')
+plt.xlabel('Precio')
+plt.ylabel('Frecuencia')
+plt.tight_layout()
+plt.savefig('distribucion_precios.png')
+print("El gráfico de distribución de precios se ha guardado como 'distribucion_precios.png'")
